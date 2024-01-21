@@ -1,0 +1,8 @@
+{
+    "name": "piggy-bank",
+    "instances": 3,
+    "log_file": "/server/.logs/edms.acts.scheduler.log",
+    "script": "build/server.js",
+    "autorestart": true,
+    "interpreter": "node@18.18.2"
+}

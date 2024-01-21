@@ -1,0 +1,72 @@
+{
+  "name": "budgetify",
+  "version": "1.0.0",
+  "description": "Web application for Exadel Internship project. It is kinda online bank",
+  "main": "server.js",
+  "scripts": {
+    "build": "node_modules/typescript/bin/tsc ",
+    "start:dev": "nodemon src/server.ts",
+    "start:prod": "node src/server.ts",
+    "mongo:indices": "echo 'Coming soon!'",
+    "debug": "nodemon src/server.ts --inspect",
+    "lint": "eslint --fix --ext .ts src",
+    "pretty": "prettier --write ./src",
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asadbek2021/piggy-bank.git"
+  },
+  "keywords": [],
+  "author": "Asadbek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asadbek2021/piggy-bank/issues"
+  },
+  "homepage": "https://github.com/asadbek2021/piggy-bank#readme",
+  "dependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.12",
+    "@types/currency-formatter": "^1.5.1",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^17.0.25",
+    "@types/passport": "^1.0.7",
+    "@types/passport-jwt": "^3.0.6",
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "currency-formatter": "^1.5.9",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.6",
+    "passport": "^0.5.2",
+    "passport-jwt": "^4.0.0",
+    "redis": "^4.6.6",
+    "ts-node": "^10.7.0",
+    "uuid": "^8.3.2",
+    "winston": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-node": "^2.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
+    "supertest": "^6.2.2",
+    "typescript": "^5.2.0"
+  },
+  "engines": {
+    "node": "18.18.2",
+    "npm": "9.8.1"
+  }
+}

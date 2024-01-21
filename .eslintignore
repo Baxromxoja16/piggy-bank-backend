@@ -1,0 +1,4 @@
+.env
+collection.json
+.prettierrc
+**/*test.js

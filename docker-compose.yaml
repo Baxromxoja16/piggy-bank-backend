@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      
+    container_name: web
+    ports:
+      - "3000:3000"
+    restart: always
+    
+    
+  db:
+    image: mongo:5.0-focal
+    container_name: db
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+    ports:
+      - 27017:27017
+    command: mongod
+  
+volumes:
+  mongodb:
+  mongodb_config:
