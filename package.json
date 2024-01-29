@@ -4,10 +4,9 @@
   "description": "Web application for Exadel Internship project. It is kinda online bank",
   "main": "server.js",
   "scripts": {
-    "build": "node_modules/typescript/bin/tsc ",
     "start:dev": "nodemon src/server.ts",
     "start:prod": "node src/server.ts",
-    "start": "node build/server.js",
+    "build": "node build/server.js",
     "mongo:indices": "echo 'Coming soon!'",
     "debug": "nodemon src/server.ts --inspect",
     "lint": "eslint --fix --ext .ts src",
