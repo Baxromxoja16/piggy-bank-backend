@@ -7,7 +7,7 @@
     "build": "node_modules/typescript/bin/tsc ",
     "start:dev": "nodemon src/server.ts",
     "start:prod": "node src/server.ts",
-    "start": "node src/server.ts",
+    "start": "node build/server.js",
     "mongo:indices": "echo 'Coming soon!'",
     "debug": "nodemon src/server.ts --inspect",
     "lint": "eslint --fix --ext .ts src",
