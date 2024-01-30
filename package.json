@@ -6,7 +6,7 @@
   "scripts": {
     "start:dev": "nodemon src/server.ts",
     "start:prod": "ts-node src/server.ts",
-    "build": "node build/server.js",
+    "build": "ts-node src/server.ts",
     "mongo:indices": "echo 'Coming soon!'",
     "debug": "nodemon src/server.ts --inspect",
     "lint": "eslint --fix --ext .ts src",
