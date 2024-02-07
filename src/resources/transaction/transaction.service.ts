@@ -31,6 +31,10 @@ export async function createTrans(req: Request, res: Response, next: NextFunctio
     // Tranzaksiya miqdorini olish
     const { amount, type } = req.body;
 
+    if (account?.balance! < amount && type === 'expense') {
+      return res.status(500).json({ message: "You don't have enough money in your account" });
+    }
+
     // Tranzaksiya turi "expense" bo'lsa, balansdan ayirish
     if (type === "expense" && account !== null) {
       account.balance -= amount;
