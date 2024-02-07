@@ -67,26 +67,28 @@ export async function updateTrans(req: Request, res: Response, next: NextFunctio
 export async function deleteTrans(req: Request, res: Response, next: NextFunction) {
   try {
    // Tranzaksiyani o'chirish
-   const transaction = await Transaction.findByIdAndDelete(req.params.id);
+   const findTransaction = await Transaction.findById(req.params.id);
 
-   if (!transaction) {
+   if (!findTransaction) {
      return res.status(404).json({ message: "Tranzaksiya topilmadi" });
    }
 
    // Hisobni olish
-   const account = await Account.findById(transaction.accountId);
+   const account = await Account.findById(findTransaction.accountId);
 
    // Tranzaksiya miqdorini qayta hisoblash
-   if (transaction.type === "expense" && account) {
-     account.balance += transaction.amount;
-   } else if (transaction.type === "income" && account) {
-      if (account?.balance! < transaction.amount) {
+   if (findTransaction.type === "expense" && account) {
+     account.balance += findTransaction.amount;
+   } else if (findTransaction.type === "income" && account) {
+      if (account?.balance! < findTransaction.amount) {
         return res.status(500).json(
           { message: "You can't remove this transaction" }
         );
+      } else {
+        account.balance -= findTransaction.amount;
       }
-      account.balance -= transaction.amount;
    }
+   await Transaction.findByIdAndDelete(req.params.id);
 
    // Hisobni yangilash
    await account?.save();
