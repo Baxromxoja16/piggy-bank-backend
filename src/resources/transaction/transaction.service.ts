@@ -80,7 +80,12 @@ export async function deleteTrans(req: Request, res: Response, next: NextFunctio
    if (transaction.type === "expense" && account) {
      account.balance += transaction.amount;
    } else if (transaction.type === "income" && account) {
-     account.balance -= transaction.amount;
+      if (account?.balance! < transaction.amount) {
+        return res.status(500).json(
+          { message: "You can't remove this transaction" }
+        );
+      }
+      account.balance -= transaction.amount;
    }
 
    // Hisobni yangilash
