@@ -7,6 +7,10 @@ const categorySchema = new Schema({
     unique: true,
     min: 3,
   },
+  accountId: {
+    type: String,
+    required: true,
+  },
   type: {
     type: String,
     validate: {
