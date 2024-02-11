@@ -15,7 +15,8 @@ export async function getAllStatistics(req: Request, res: Response, next: NextFu
       {
         $group: {
           _id: {
-            $dateToString: { format: "%Y-%m", date: "$date_of_operation" }
+            monthYear: { $dateToString: { format: "%Y-%m", date: "$date_of_operation" } },
+            category: "$categories"
           },
           income: {
             $sum: { $cond: [{ $eq: ["$type", "income"] }, "$amount", 0] }
@@ -47,37 +48,17 @@ export async function getAllStatistics(req: Request, res: Response, next: NextFu
       },
       {
         $group: {
-          _id: null,
-          data: {
-            $push: {
-              monthYear: "$monthYear",
-              income: "$income",
-              expenses: "$expenses",
-              savings: "$savings",
-              percentOfSavings: "$percentOfSavings"
-            }
-          },
+          _id: "$_id.monthYear",
           totalIncome: { $sum: "$income" },
           totalExpenses: { $sum: "$expenses" },
           totalSavings: { $sum: "$savings" },
-          totalPercentOfSavings: { $avg: "$percentOfSavings" }
-        }
-      },
-      {
-        $unwind: "$data"
-      },
-      {
-        $project: {
-          _id: 0,
-          monthYear: "$data.monthYear",
-          income: "$data.income",
-          expenses: "$data.expenses",
-          savings: "$data.savings",
-          percentOfSavings: "$data.percentOfSavings",
-          totalIncome: 1,
-          totalExpenses: 1,
-          totalSavings: 1,
-          totalPercentOfSavings: 1
+          totalPercentOfSavings: { $avg: "$percentOfSavings" },
+          categoryStats: {
+            $push: {
+              category: "$_id.category",
+              categoryAmount: "$expenses",
+            }
+          }
         }
       }
     ])
