@@ -37,18 +37,6 @@ export async function getAllStatistics(req: Request, res: Response, next: NextFu
           income: 1,
           expenses: 1,
           savings: { $subtract: ["$income", "$expenses"] },
-          percentOfSavings: {
-            $cond: [
-              { $eq: ["$income", 0] }, // Check if income is zero
-              0, // Return 0 if income is zero
-              {
-                $multiply: [
-                  { $divide: [{ $subtract: ["$income", "$expenses"] }, "$income"] },
-                  100
-                ]
-              }
-            ]
-          }
         }
       },
       {
@@ -67,8 +55,34 @@ export async function getAllStatistics(req: Request, res: Response, next: NextFu
         }
       },
       {
+        $project: {
+          _id: 1,
+          totalIncome: 1,
+          totalExpenses: 1,
+          totalSavings: 1,
+          categoryStats: 1,
+          totalPercentOfSavings: {
+            $cond: [
+              { $eq: ["$totalIncome", 0] }, // Check if income is zero
+              {
+                $multiply: [
+                  { $divide: [{ $subtract: ["$totalIncome", "$totalExpenses"] }, 1] },
+                  1
+                ]
+              }, // Return 0 if income is zero
+              {
+                $multiply: [
+                  { $divide: [{ $subtract: ["$totalIncome", "$totalExpenses"] }, "$totalIncome"] },
+                  100
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
         $group: {
-          _id: {start, end},
+          _id: null,
           totalIncome: { $sum: "$totalIncome" },
           totalExpenses: { $sum: "$totalExpenses" },
           totalSavings: { $sum: "$totalSavings" },
