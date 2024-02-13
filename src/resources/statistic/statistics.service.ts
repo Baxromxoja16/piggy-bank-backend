@@ -5,11 +5,16 @@ import { ObjectId } from 'mongodb'
 export async function getAllStatistics(req: Request, res: Response, next: NextFunction) {
   try {
     const { accountId } = req.params;
+    const { start, end } = req.body;
 
     const aggr = await Transaction.aggregate([
       {
         $match: {
-          accountId: new ObjectId(accountId)
+          accountId: new ObjectId(accountId),
+          date_of_operation: {
+            $gte: new Date(start),
+            $lte: new Date(end)
+          }
         }
       },
       {
@@ -60,7 +65,27 @@ export async function getAllStatistics(req: Request, res: Response, next: NextFu
             }
           }
         }
-      }
+      },
+      {
+        $group: {
+          _id: {start, end},
+          totalIncome: { $sum: "$totalIncome" },
+          totalExpenses: { $sum: "$totalExpenses" },
+          totalSavings: { $sum: "$totalSavings" },
+          totalPercentOfSavings: { $avg: "$totalPercentOfSavings" },
+          allMonths: {
+            $push: {
+              monthYear: "$_id",
+              totalIncome: "$totalIncome",
+              totalExpenses: "$totalExpenses",
+              totalSavings: "$totalSavings",
+              totalPercentOfSavings: "$totalPercentOfSavings",
+              categoryStats: "$categoryStats.category",
+              categoryAmount: "$categoryStats.categoryAmount"
+            }
+          }
+        }
+      },
     ])
 
     res.json(aggr);

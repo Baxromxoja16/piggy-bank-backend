@@ -3,6 +3,6 @@ import { getAllStatistics } from './statistics.service';
 
 const router = Router();
 
-router.get('/:accountId', getAllStatistics);
+router.post('/:accountId', getAllStatistics);
 
 export default router;
