@@ -86,7 +86,7 @@ export async function getAllStatistics(req: Request, res: Response, next: NextFu
           totalIncome: { $sum: "$totalIncome" },
           totalExpenses: { $sum: "$totalExpenses" },
           totalSavings: { $sum: "$totalSavings" },
-          totalPercentOfSavings: { $avg: "$totalPercentOfSavings" },
+          // totalPercentOfSavings: { $push: "$totalPercentOfSavings" },
           allMonths: {
             $push: {
               monthYear: "$_id",
